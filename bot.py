@@ -28,7 +28,7 @@ class Tran:
         m1.update(self.sign)
         self.sign = m1.hexdigest()
         self.myurl = self.myurl + '?appid=' + self.appid + '&q=' + urllib.quote(
-            text) + '&from=auto' + '&to=' + targetLang + '&salt=' + str(self.salt) + '&sign=' + self.sign
+            text.encode('utf-8')) + '&from=auto' + '&to=' + targetLang + '&salt=' + str(self.salt) + '&sign=' + self.sign
 
         result = ''
         try:
