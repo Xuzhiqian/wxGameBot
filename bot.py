@@ -49,7 +49,8 @@ class Tran:
             return result
 
     def transform(self, text):
-        if text == '' return ''
+        if text == '':
+            return ''
         l1 = self.translate(text,random.choice(self.lan))
         if l1 == '':
             return ''
