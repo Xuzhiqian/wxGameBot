@@ -33,7 +33,7 @@ class Tran:
         result = ''
         try:
             httpClient = httplib.HTTPConnection('api.fanyi.baidu.com')
-            httpClient.request('GET', myurl)
+            httpClient.request('GET', self.myurl)
 
             # response是HTTPResponse对象
             response = httpClient.getresponse()
