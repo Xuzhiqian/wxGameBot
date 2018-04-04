@@ -5,6 +5,7 @@ import goslate as GS
 import sys
 import threading
 from wxbot import *
+import urllib2
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -15,8 +16,11 @@ class wxGameBot(WXBot):
 
     def __init__(self):
         WXBot.__init__(self)
-        self.gs = GS.Goslate()
-
+        proxy_handler = urllib2.ProxyHandler({"http" : "http://proxy-domain.name:8080"})
+        proxy_opener = urllib2.build_opener(urllib2.HTTPHandler(proxy_handler),
+                                    urllib2.HTTPSHandler(proxy_handler))
+        self.gs = GS.Goslate(opener=proxy_opener)
+        
     def transform(self, text):
         m = self.gs.translate(text, 'en')
         return self.gs.translate(m, 'zh')
