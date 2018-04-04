@@ -7,6 +7,7 @@ import random
 import sys
 import threading
 import urllib
+import json
 from wxbot import *
 
 reload(sys)
@@ -37,7 +38,7 @@ class Tran:
 
             # response是HTTPResponse对象
             response = httpClient.getresponse()
-            result = response.read()
+            result = json.loads(response.read())
             result = result['trans_result'][0]['dst']
         except Exception, e:
             print e
