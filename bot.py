@@ -48,10 +48,10 @@ class Tran:
             return result
 
     def transform(self, text):
-        l1 = self.translate(text,'fra')
+        l1 = self.translate(text,'en')
         if l1 == '':
             return ''
-        return = self.translate(l1,'zh')
+        return self.translate(l1,'zh')
 
 class wxGameBot(WXBot):
 
