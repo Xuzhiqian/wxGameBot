@@ -26,8 +26,7 @@ class wxGameBot(WXBot):
             	if seg['type'] == 'at' and seg['value'] == 'Bot':
             		self.send_msg_by_uid(self.tranform(msg['content']['desc']),msg['user']['id'])
             		break
-            
-                    
+
 def main():
     bot = wxGameBot()
     bot.DEBUG = True
