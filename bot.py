@@ -21,8 +21,11 @@ class wxGameBot(WXBot):
             
     def handle_msg_all(self, msg):
     	if msg['msg_type_id'] == 3 and msg['content']['type'] == 0:
-            if msg['content']['detail']['type'] == 'at' and msg['content']['detail']['value'] == 'Bot':
-            	self.send_msg_by_uid(self.tranform(msg['content']['desc']),msg['user']['id'])
+    		for index in msg['content']['detail']:
+    			seg = msg['content']['detail'][index]
+            	if seg['type'] == 'at' and seg['value'] == 'Bot':
+            		self.send_msg_by_uid(self.tranform(msg['content']['desc']),msg['user']['id'])
+            		break
             
                     
 def main():
