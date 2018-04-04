@@ -30,24 +30,30 @@ class Tran:
         self.myurl = self.myurl + '?appid=' + self.appid + '&q=' + urllib.quote(
             text.encode('utf-8')) + '&from=auto' + '&to=' + targetLang + '&salt=' + str(self.salt) + '&sign=' + self.sign
 
-        result = ''
+        result =''
         try:
             httpClient = httplib.HTTPConnection('api.fanyi.baidu.com')
             httpClient.request('GET', self.myurl)
 
             # response是HTTPResponse对象
             response = httpClient.getresponse()
-            print response.read()
-            print response
+            result = response.read()
+            result = result['trans_result'][0]['dst']
         except Exception, e:
             print e
         finally:
             if httpClient:
                 httpClient.close()
+            return result
 
     def transform(self, text):
-        return ''
-
+        l1 = self.translate(text,'en')
+        if l1 == '':
+            return ''
+        l2 = self.translate(l1,'fra')
+        if l2 == '':
+            return ''
+        return self.translate(l2,'zh')
 
 class wxGameBot(WXBot):
 
@@ -61,8 +67,7 @@ class wxGameBot(WXBot):
     def handle_msg_all(self, msg):
         if msg['msg_type_id'] == 3 and msg['content']['type'] == 0:
             if msg['content']['detail'][0]['type'] == 'at' and msg['content']['detail'][0]['value'] == u'Bot':
-                self.T.translate(msg['content']['desc'], 'en')
-                # self.send_msg_by_uid(self.transform(msg['content']['desc']), msg['user']['id'])
+                self.send_msg_by_uid(self.T.transform(msg['content']['desc']), msg['user']['id'])
 
 
 def main():
@@ -70,7 +75,6 @@ def main():
     bot.DEBUG = True
     bot.conf['qr'] = 'tty'
     bot.run()
-
 
 if __name__ == '__main__':
     main()
