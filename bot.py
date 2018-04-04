@@ -49,6 +49,7 @@ class Tran:
             return result
 
     def transform(self, text):
+        if text == '' return ''
         l1 = self.translate(text,random.choice(self.lan))
         if l1 == '':
             return ''
@@ -59,9 +60,6 @@ class wxGameBot(WXBot):
     def __init__(self):
         WXBot.__init__(self)
         self.T = Tran()
-
-    def transform(self, text):
-        return ''
 
     def handle_msg_all(self, msg):
         if msg['msg_type_id'] == 3 and msg['content']['type'] == 0:
