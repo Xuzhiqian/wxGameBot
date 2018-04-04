@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from wxbot import *
-import threading
 import goslate as GS
 import sys
+import threading
+from wxbot import *
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 import re
+
 
 class wxGameBot(WXBot):
 
@@ -15,26 +17,22 @@ class wxGameBot(WXBot):
         WXBot.__init__(self)
         self.gs = GS.Goslate()
 
-    def transform(self,text):
-        m = self.gs.translate(text,'en')
-        return self.gs.translate(m,'zh')
-            
+    def transform(self, text):
+        m = self.gs.translate(text, 'en')
+        return self.gs.translate(m, 'zh')
+
     def handle_msg_all(self, msg):
         if msg['msg_type_id'] == 3 and msg['content']['type'] == 0:
-            print msg['content']['detail']
-            print msg['content']['desc']
+            if msg['content']['detail'][0]['type'] == 'at' and msg['content']['detail'][0]['value'] == u'Bot':
+                self.send_msg_by_uid(self.tranform(msg['content']['desc']), msg['user']['id'])
 
-            # for i in msg['content']['detail']:
-            #   seg = msg['content']['detail'][i]
-             #  if seg['type'] == 'at' and seg['value'] == 'Bot':
-             #      self.send_msg_by_uid(self.tranform(msg['content']['desc']),msg['user']['id'])
-             #      break
 
 def main():
     bot = wxGameBot()
     bot.DEBUG = True
     bot.conf['qr'] = 'tty'
     bot.run()
+
 
 if __name__ == '__main__':
     main()
