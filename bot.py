@@ -22,6 +22,7 @@ class Tran:
         self.httpClient = None
         self.myurl = '/api/trans/vip/translate'
         self.salt = random.randint(32768, 65536)
+        self.lan = ['en','fra','jp','de']
 
     def translate(self, text, targetLang):
         self.sign = self.appid + text + str(self.salt) + self.secretKey
@@ -48,7 +49,7 @@ class Tran:
             return result
 
     def transform(self, text):
-        l1 = self.translate(text,'en')
+        l1 = self.translate(text,random.choice(self.lan))
         if l1 == '':
             return ''
         return self.translate(l1,'zh')
