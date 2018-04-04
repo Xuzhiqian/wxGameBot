@@ -30,7 +30,6 @@ class wxGameBot(WXBot):
 def main():
     bot = wxGameBot()
     bot.DEBUG = True
-    bot.conf['qr'] = 'tty'
     bot.run()
 
 
